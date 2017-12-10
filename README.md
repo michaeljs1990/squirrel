@@ -73,3 +73,15 @@ The plan will be walked through in serial and the first level of indentation suc
 as `configure_network` is only used for logging purposes. template under it is
 the action that you will take which will have more info in the go file for it under
 the `nuts` directory. 
+
+## Hacking
+
+To get setup you will need to install https://github.com/golang/dep. I did that with
+
+```
+brew install dep
+```
+on mac but YMMV depending on OS and if this is absorbed into the go toolchain in the
+future.
+
+To add a new dependency you just do `dep ensure -add github.com/foo/bar`
