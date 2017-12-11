@@ -5,17 +5,20 @@ package providers
 import (
 	"github.com/fatih/structs"
 	"github.com/shirou/gopsutil/cpu"
+	"github.com/shirou/gopsutil/host"
 )
 
 // Local ...
 type Local struct {
 	*CPU
+	*Host
 }
 
 // NewLocal ...
 func NewLocal() *Local {
 	return &Local{
 		&CPU{},
+		&Host{},
 	}
 }
 
@@ -24,15 +27,17 @@ func NewLocal() *Local {
 // so we can easily provide this as input to a template
 // later
 func (l *Local) Collect() map[string]interface{} {
-	l.GetCPUInfo()
+	l.CollectCPUInfo()
+	l.CollectHostInfo()
+
 	var ret = structs.Map(l)
 	return ret
 }
 
-// GetCPUInfo fetches all known information
+// CollectCPUInfo fetches all known information
 // about the CPU and packages it up for your
 // convenience
-func (l *Local) GetCPUInfo() {
+func (l *Local) CollectCPUInfo() {
 	var cpus, err = cpu.Info()
 	if err != nil {
 		panic(err)
@@ -45,4 +50,20 @@ func (l *Local) GetCPUInfo() {
 	l.Family = cpu.Family
 	l.Model = cpu.Model
 	l.ModelName = cpu.ModelName
+}
+
+// CollectHostInfo sets all info regarding
+// OS and Platform
+func (l *Local) CollectHostInfo() {
+	var host, err = host.Info()
+	if err != nil {
+		panic(err)
+	}
+
+	l.OS = host.OS
+	l.Platform = host.Platform
+	l.PlatformFamily = host.PlatformFamily
+	l.PlatformVersion = host.PlatformVersion
+	l.VirtualizationSystem = host.VirtualizationSystem
+	l.VirtualizationRole = host.VirtualizationRole
 }

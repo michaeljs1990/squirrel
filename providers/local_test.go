@@ -27,6 +27,7 @@ func TestLocalStruct(t *testing.T) {
 			Model:     "Intel",
 			ModelName: "Intel",
 		},
+		&Host{},
 	}
 
 	if cmp.Equal(l, lmock) == false {
@@ -34,7 +35,7 @@ func TestLocalStruct(t *testing.T) {
 	}
 }
 
-// TestLocalCanCollectCPUs ensure that we can collect
+// TestLocalCanCollectInfo ensure that we can collect
 // CPU info without causing a panic in the go runtime.
 // pass -v to go test to dump out the log which is a
 // useful sanity check. Unfortunately the sys folder
@@ -42,9 +43,10 @@ func TestLocalStruct(t *testing.T) {
 // Make this testable we need to upstream some changes
 // to allow overwritting the sys path with some
 // environment variables.
-func TestLocalCanCollectCPUs(t *testing.T) {
+func TestLocalCanCollectInfo(t *testing.T) {
 	var l = NewLocal()
-	l.GetCPUInfo()
+	l.CollectCPUInfo()
+	l.CollectHostInfo()
 	t.Logf("Local Struct: %+v", l)
 }
 

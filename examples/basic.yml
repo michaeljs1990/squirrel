@@ -6,27 +6,24 @@ details: |
   to run on the system.
 
 logging: info
-backends: 
+backends:
   - collins
 codenames:
   - xenial
 
 plan:
-  configure_network:
-    template:
-      src: interfaces.template
-      dest: /etc/network/interfaces
-      vars:
-        iface: eth0
-        ip: {{ public_ip }}
-  setup_puppet:
-    git:
-      src: git@github.com:michaeljs1990/puppet.git
-      dest: /var/run/puppet_repo
-  run_puppet:
-    command:
-      exec: /usr/bin/puppet agent -t
-      retry: 6
+  template:
+    src: interfaces.template
+    dest: /etc/network/interfaces
+    vars:
+      iface: eth0
+      ip: "{{ collins.public_ip }}"
+  git:
+    src: git@github.com:michaeljs1990/puppet.git
+    dest: /var/run/puppet_repo
+  command:
+    exec: /usr/bin/puppet agent -t
+    retry: 6
 
 success: |
   {{ asset }} has finished provisioning and is ready for use.

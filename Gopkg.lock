@@ -27,7 +27,7 @@
 
 [[projects]]
   name = "github.com/shirou/gopsutil"
-  packages = ["cpu","internal/common"]
+  packages = ["cpu","host","internal/common","process"]
   revision = "bfe3c2e8f406bf352bc8df81f98c752224867349"
   version = "v2.17.11"
 
@@ -37,9 +37,15 @@
   packages = ["unix","windows"]
   revision = "b8f5ef32195cae6470b728e8ca677f0dbed1a004"
 
+[[projects]]
+  branch = "v2"
+  name = "gopkg.in/yaml.v2"
+  packages = ["."]
+  revision = "287cf08546ab5e7e37d55a84f7ed3fd1db036de5"
+
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "e160aab30628f1b54887591c00a66cb4f361189f0b1ee2f13266b3907ab4a6c0"
+  inputs-digest = "d7bf7516ce6524107e95df5085c9a455d8ce5ff3956c1041843943217cf34efb"
   solver-name = "gps-cdcl"
   solver-version = 1
