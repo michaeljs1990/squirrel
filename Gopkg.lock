@@ -20,6 +20,12 @@
   version = "v1.2.0"
 
 [[projects]]
+  branch = "master"
+  name = "github.com/golang/glog"
+  packages = ["."]
+  revision = "23def4e6c14b4da8ac2ed8007337bc5eb5007998"
+
+[[projects]]
   name = "github.com/google/go-cmp"
   packages = ["cmp","cmp/internal/diff","cmp/internal/function","cmp/internal/value"]
   revision = "8099a9787ce5dc5984ed879a3bda47dc730a8e97"
@@ -27,9 +33,15 @@
 
 [[projects]]
   name = "github.com/shirou/gopsutil"
-  packages = ["cpu","host","internal/common","process"]
+  packages = ["cpu","host","internal/common","mem","net","process"]
   revision = "bfe3c2e8f406bf352bc8df81f98c752224867349"
   version = "v2.17.11"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/shirou/w32"
+  packages = ["."]
+  revision = "bb4de0191aa41b5507caa14b0650cdbddcd9280b"
 
 [[projects]]
   branch = "master"
@@ -46,6 +58,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "d7bf7516ce6524107e95df5085c9a455d8ce5ff3956c1041843943217cf34efb"
+  inputs-digest = "358b39ab00cee4e0e19af8b5aed9e375095b307689dd7e700e206c21f95e043c"
   solver-name = "gps-cdcl"
   solver-version = 1

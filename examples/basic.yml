@@ -5,25 +5,28 @@ details: |
   configuration of your network and setting up puppet
   to run on the system.
 
-logging: info
 backends:
+  - local
   - collins
 codenames:
   - xenial
 
+# We have to use a list because Go doesn't have an ordered map
+# and parsing yaml into it and then trying to order it is pure
+# horse shit that I don't want to deal with.
 plan:
-  template:
-    src: interfaces.template
-    dest: /etc/network/interfaces
-    vars:
-      iface: eth0
-      ip: "{{ collins.public_ip }}"
-  git:
-    src: git@github.com:michaeljs1990/puppet.git
-    dest: /var/run/puppet_repo
-  command:
-    exec: /usr/bin/puppet agent -t
-    retry: 6
+  - template:
+      src: interfaces.template
+      dest: /etc/network/interfaces
+      vars:
+        iface: "eth0"
+        ip: "{{ collins.public_ip }}"
+  # - git:
+  #     src: git@github.com:michaeljs1990/puppet.git
+  #     dest: /var/run/puppet_repo
+  # - command:
+  #     exec: /usr/bin/puppet agent -t
+  #     retry: 6
 
 success: |
   {{ asset }} has finished provisioning and is ready for use.
