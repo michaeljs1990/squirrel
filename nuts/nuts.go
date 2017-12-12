@@ -3,8 +3,6 @@ package nuts
 import (
 	"fmt"
 	"os"
-
-	"github.com/michaeljs1990/squirrel/src"
 )
 
 // Nut provides the interface that must
@@ -23,9 +21,9 @@ type Module interface {
 // RunNuts glues all the nuts together with
 // the runfile. This is pretty ugly but I guess
 // it's not super magical which is cool...
-func RunNuts(x src.Runfile) error {
+func RunNuts(p []map[string]interface{}) error {
 	var modules []Module
-	for _, v := range x.Plans {
+	for _, v := range p {
 		for ik, iv := range v {
 			// I'm taking advantate of switch having no fallthrough
 			// in go so I don't have to check for err != nil inside

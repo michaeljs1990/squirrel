@@ -3,23 +3,19 @@
 package providers
 
 import (
-	"github.com/fatih/structs"
 	"github.com/shirou/gopsutil/cpu"
 	"github.com/shirou/gopsutil/host"
 )
 
 // Local ...
 type Local struct {
-	*CPU
-	*Host
+	vars map[string]interface{}
 }
 
 // NewLocal ...
 func NewLocal() *Local {
-	return &Local{
-		&CPU{},
-		&Host{},
-	}
+	var v = make(map[string]interface{})
+	return &Local{vars: v}
 }
 
 // Collect all the information about the Local struct
@@ -30,8 +26,11 @@ func (l *Local) Collect() map[string]interface{} {
 	l.CollectCPUInfo()
 	l.CollectHostInfo()
 
-	var ret = structs.Map(l)
-	return ret
+	var localMap = make(map[string]interface{})
+	for k, v := range l.vars {
+		localMap["local_"+k] = v
+	}
+	return localMap
 }
 
 // CollectCPUInfo fetches all known information
@@ -44,12 +43,12 @@ func (l *Local) CollectCPUInfo() {
 	}
 
 	var cpu = cpus[0]
-	l.Cores = cpu.Cores
-	l.Threads = cpu.Cores * 2
-	l.VendorID = cpu.VendorID
-	l.Family = cpu.Family
-	l.Model = cpu.Model
-	l.ModelName = cpu.ModelName
+	l.vars["cores"] = cpu.Cores
+	l.vars["threads"] = cpu.Cores * 2
+	l.vars["vendorID"] = cpu.VendorID
+	l.vars["family"] = cpu.Family
+	l.vars["models"] = cpu.Model
+	l.vars["model_name"] = cpu.ModelName
 }
 
 // CollectHostInfo sets all info regarding
@@ -60,10 +59,10 @@ func (l *Local) CollectHostInfo() {
 		panic(err)
 	}
 
-	l.OS = host.OS
-	l.Platform = host.Platform
-	l.PlatformFamily = host.PlatformFamily
-	l.PlatformVersion = host.PlatformVersion
-	l.VirtualizationSystem = host.VirtualizationSystem
-	l.VirtualizationRole = host.VirtualizationRole
+	l.vars["os"] = host.OS
+	l.vars["platform"] = host.Platform
+	l.vars["platform_family"] = host.PlatformFamily
+	l.vars["platform_version"] = host.PlatformVersion
+	l.vars["virtualization_system"] = host.VirtualizationSystem
+	l.vars["virtualization_role"] = host.VirtualizationRole
 }

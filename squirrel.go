@@ -11,6 +11,7 @@ import (
 
 	"github.com/golang/glog"
 	"github.com/michaeljs1990/squirrel/nuts"
+	"github.com/michaeljs1990/squirrel/providers"
 	"github.com/michaeljs1990/squirrel/src"
 )
 
@@ -33,7 +34,9 @@ func main() {
 	}
 
 	runfile.PrintHeader()
-	err = nuts.RunNuts(runfile)
+	providers.InitializeProviders(runfile.Backends)
+	providers.FetchAllProviders()
+	err = nuts.RunNuts(runfile.Plans)
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)

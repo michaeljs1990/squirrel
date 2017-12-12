@@ -12,7 +12,7 @@ type Template struct {
 	vars map[string]string
 }
 
-// ParseTemplate takes a chunck of YAML
+// ParseTemplate takes a chunk of YAML
 // and turns it into a Template
 // struct that is useful for later
 func ParseTemplate(x map[interface{}]interface{}) (Module, error) {

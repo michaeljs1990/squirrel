@@ -17,10 +17,11 @@ import (
 // in the Runfile struct or the Parser. It's
 // easier to isolate it in the Parser IMO.
 type Runfile struct {
-	Name     string                   `yaml:"name"`
-	Details  string                   `yaml:"details"`
-	Backends []string                 `yaml:"backends"`
-	Plans    []map[string]interface{} `yaml:"plan"`
+	Name      string                   `yaml:"name"`
+	Details   string                   `yaml:"details"`
+	Backends  []string                 `yaml:"backends"`
+	Codenames []string                 `yaml:"codenames"`
+	Plans     []map[string]interface{} `yaml:"plan"`
 }
 
 // NewRunfile takes a slice of bytes and trys
@@ -43,6 +44,10 @@ func (r Runfile) PrintHeader() {
 	fmt.Println("Details:  " + r.Details)
 	fmt.Println("Backends: ")
 	for _, v := range r.Backends {
+		fmt.Println(" - " + v)
+	}
+	fmt.Println("Codenames: ")
+	for _, v := range r.Codenames {
 		fmt.Println(" - " + v)
 	}
 	fmt.Println("==============================================================")
